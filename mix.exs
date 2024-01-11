@@ -28,7 +28,7 @@ defmodule LiveViewNativeHtml.MixProject do
     [
       {:live_view_native, path: "../live_view_native"},
       {:phoenix_live_view, path: "../phoenix_live_view", override: true},
-      {:live_view_native_test, path: "../live_view_native_test"}
+      {:live_view_native_test, path: "../live_view_native_test", only: :test}
     ]
   end
 end
