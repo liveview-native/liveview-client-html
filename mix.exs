@@ -26,7 +26,8 @@ defmodule LiveViewNativeHtml.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:live_view_native, path: "../live_view_native"},
+      {:floki, ">= 0.30.0", only: :test},
+      # {:live_view_native, path: "../live_view_native", override: true},
       {:live_view_native, github: "liveview-native/live_view_native"},
       # {:phoenix_live_view, path: "../phoenix_live_view", override: true},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", ref: "476d1cd288474d7acb33424a74b304b4e9495ff1", override: true},
