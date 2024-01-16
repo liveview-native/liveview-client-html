@@ -1,6 +1,6 @@
 # LiveViewNative.HTML
 
-> #### Info {: .info}
+> #### Client Spec {: .info}
 >
 > format: `:html`
 >
@@ -55,6 +55,23 @@ end
 Further details on additional options and an explanation of template rendering vs using `render/2` are in the LiveView Native docs.
 
 However, instead of `~LVN` you still use `~H` inside `render/2` functions. You also will use `.heex` as the template extensions instead of `.neex`.
+
+One advantage that using `live_view_native_html` and delegating to render components has over using LiveView's in-module HTML rendering is you get the `target` benefits from LiveView Native. Which means that you could opt to pass along a custom `interface` map with the `LiveSocket` connection in your `app.js`:
+
+```javascript
+let inteface = buildInterface(); // your own custom function to populate an interface object
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken, _interface: interface}});
+```
+
+now you can use `render/2` in the reder component and pattern match on custom targets or interface values. Perhaps you do some boot time device detection to determine the user is on mobile or not. From our prior example you could add the template `html/home_live+mobile.html.heex` or the function:
+
+```elixir
+def render(assigns, %{"target" => "mobile"}) do
+   ~H"""
+     ...
+   """
+end
+```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
