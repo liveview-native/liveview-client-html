@@ -3,7 +3,7 @@ defmodule LiveViewNativeTest.HTML.InlineLive.HTML do
     format: :html,
     as: :render
 
-  def render(assigns, %{target: "mobile"}) do
+  def render(assigns, %{"target" => "mobile"}) do
     ~H"""
     <div id="mobile-inline">Mobile Target Inline HTML Override Render <%= @count %></div>
     """

@@ -13,14 +13,14 @@ defmodule LiveViewNative.HTML.InlineRenderTest do
 
   test "can render the override html format", %{conn: conn} do
     conn = put_req_header(conn, "accept", "text/html")
-    {:ok, lv, _html} = live(conn, "/inline")
+    {:ok, lv, _body} = live(conn, "/inline")
 
     assert lv |> element("#override-container #inline") |> render() =~ "Inline HTML Override Render 100"
   end
 
   test "can render the override html format with mobile target", %{conn: conn} do
     conn = put_req_header(conn, "accept", "text/html")
-    {:ok, lv, _html} = live(conn, "/inline?target=mobile")
+    {:ok, lv, _body} = live(conn, "/inline?_interface[target]=mobile")
 
     assert lv |> element("#mobile-inline") |> render() =~ "Mobile Target Inline HTML Override Render 100"
   end
