@@ -5,6 +5,8 @@
 > format: `:html`
 >
 > module_suffix: `HTML`
+>
+> template_sigil: `~H`
 
 ## Installation
 
@@ -43,7 +45,7 @@ defmodule MyAppWeb.HomeLive do
 end
 ```
 
-then just like all format LiveView Native rendering components you will create a new module namespaced under the calling module with the format appended:
+then just like all format LiveView Native rendering components you will create a new module namespaced under the calling module with the `module_suffix` appended:
 
 ```elixir
 defmodule MyAppWeb.HomeLive.HTML do
