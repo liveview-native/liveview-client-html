@@ -1,7 +1,7 @@
-defmodule LiveViewNativeHtml.MixProject do
+defmodule LiveViewNative.HTML.MixProject do
   use Mix.Project
 
-  @version "0.3.0-alpha.1"
+  @version "0.3.0-alpha.2"
   @source_url "https://github.com/liveview-native/live_view_native_html"
 
   def project do
