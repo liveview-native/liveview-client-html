@@ -1,7 +1,6 @@
 defmodule LiveViewNative.HTML do
-  @moduledoc """
-  Client module for LiveView Native's HTML plugin
-  """
+  @moduledoc false
+
   use LiveViewNative,
     format: :html,
     component: LiveViewNative.HTML.Component,

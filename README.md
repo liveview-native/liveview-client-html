@@ -7,6 +7,8 @@
 > module_suffix: `HTML`
 >
 > template_sigil: `~H`
+>
+> component: `LiveViewNative.HTML.Component`
 
 ## Installation
 
@@ -61,7 +63,7 @@ However, instead of `~LVN` you still use `~H` inside `render/2` functions. You a
 One advantage that using `live_view_native_html` and delegating to render components has over using LiveView's in-module HTML rendering is you get the `target` benefits from LiveView Native. Which means that you could opt to pass along a custom `interface` map with the `LiveSocket` connection in your `app.js`:
 
 ```javascript
-let inteface = buildInterface(); // your own custom function to populate an interface object
+let innteface = buildInterface(); // your own custom function to populate an interface object
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken, _interface: interface}});
 ```
 
