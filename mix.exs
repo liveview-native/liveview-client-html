@@ -1,7 +1,7 @@
 defmodule LiveViewNative.HTML.MixProject do
   use Mix.Project
 
-  @version "0.3.0-beta.1"
+  @version "0.3.0-rc.1"
   @source_url "https://github.com/liveview-native/liveview-client-html"
 
   def project do
@@ -32,7 +32,7 @@ defmodule LiveViewNative.HTML.MixProject do
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:makeup_eex, ">= 0.1.1", only: :dev, runtime: false},
       {:floki, ">= 0.30.0", only: :test},
-      {:live_view_native, github: "liveview-native/live_view_native", override: true},
+      {:live_view_native, "~> 0.3.0-rc.4"},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", brnach: "main", only: :test}
     ]
   end

@@ -10,6 +10,14 @@
 >
 > component: `LiveViewNative.HTML.Component`
 
+## Why?
+
+So why is there a LiveView Native client for HTML if HTML is already supported by LiveView itself? This client
+will enable render delegation to an HTML render component for a given LiveView similar to how native clients
+delegate their rendering. This allows for a consistent separation of concerns between the LiveView handling and
+focused on state management, socket connection, and even handling. Then format-specifc rendering can be isolated
+in render components. You don't need to use this library if you prefer the default HTML rendering in LiveView.
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -18,18 +26,48 @@ by adding `live_view_native_html` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:live_view_native_html, "~> 0.3.0"}
+    {:live_view_native_html, "~> 0.3.0-rc.1"}
   ]
 end
 ```
 
-Then add the `HTML` plugin to your list of LiveView Native plugins:
+## Configuration
+
+Add the `HTML` plugin to your list of LiveView Native plugins:
 
 ```elixir
 config :live_view_native, plugins: [
   LiveViewNative.HTML
 ]
 ```
+
+Then in your app's `Native` module you must add the `html` format:
+
+```elixir
+defmodule MyAppNative do
+
+  ...
+
+  def live_view() do
+    quote do
+      use LiveViewNative.LiveView,
+        formats: [
+          :html,
+          :swiftui
+        ],
+        layouts: [
+          html: {MyAppWeb.Layouts, :app},
+          swiftui: {MyAppWeb.Layouts.SwiftUI, :app}
+        ]
+
+      unquote(verified_routes())
+    end
+  end
+
+  ...
+```
+
+You can also re-run `mix lvn.gen` which will codegen the `Native` module based upon the available LiveView Native plugins.
 
 ## Usage
 
@@ -38,22 +76,15 @@ This plugin overrides the default HTML rendering behavior of a Phoenix LiveView.
 ```elixir
 defmodule MyAppWeb.HomeLive do
   use MyAppWeb :live_view
-  use LiveViewNative.LiveView,
-    formats: [:html],
-    layouts: [
-      html: {MyAppWeb.Layouts, :app}
-    ]
+  use MyAppNative, :live_view
 
-end
 ```
 
 then just like all format LiveView Native rendering components you will create a new module namespaced under the calling module with the `module_suffix` appended:
 
 ```elixir
 defmodule MyAppWeb.HomeLive.HTML do
-  use LiveViewNative.Component,
-    format: :html
-end
+  use MyAppNative, [:render_component, :html]
 ```
 
 Further details on additional options and an explanation of template rendering vs using `render/2` are in the LiveView Native docs.
@@ -80,4 +111,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/live_view_native_html>.
-
