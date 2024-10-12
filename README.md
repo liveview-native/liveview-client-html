@@ -13,10 +13,10 @@
 ## Why?
 
 So why is there a LiveView Native client for HTML if HTML is already supported by LiveView itself? This client
-will enable render delegation to an HTML render component for a given LiveView similar to how native clients
-delegate their rendering. This allows for a consistent separation of concerns between the LiveView handling and
-focused on state management, socket connection, and even handling. Then format-specifc rendering can be isolated
-in render components. You don't need to use this library if you prefer the default HTML rendering in LiveView.
+will enable render delegation to an HTML render component for a given LiveView, similar to how native clients
+delegate their rendering. This allows for a consistent separation of concerns, with LiveView focused on state
+management, socket connection, and event handling. Format-specific rendering can then be isolated in render
+components. You don't need to use this library if you prefer the default HTML rendering in LiveView.
 
 ## Installation
 
@@ -41,7 +41,7 @@ config :live_view_native, plugins: [
 ]
 ```
 
-Then in your app's `Native` module you must add the `html` format:
+Then in your app's `Native` module, you must add the `html` format:
 
 ```elixir
 defmodule MyAppNative do
@@ -67,38 +67,37 @@ defmodule MyAppNative do
   ...
 ```
 
-You can also re-run `mix lvn.gen` which will codegen the `Native` module based upon the available LiveView Native plugins.
+You can also re-run `mix lvn.gen`, which will generate the `Native` module based on the available LiveView Native plugins.
 
 ## Usage
 
-This plugin overrides the default HTML rendering behavior of a Phoenix LiveView. Instead of handling template rendering within the LiveView the rendering is delegated to a renering component. This follows the same rendering delegation pattern found in all LiveView Native client plugins. While LiveView itself can render HTML just fine you may want to organize all clients, including HTML, with the same rendering pattern. This plugin allows for that.
+This plugin overrides the default HTML rendering behavior of a Phoenix LiveView. Instead of handling template rendering within the LiveView, the rendering is delegated to a rendering component. This follows the same rendering delegation pattern found in all LiveView Native client plugins. While LiveView itself can render HTML just fine, you may want to organize all clients, including HTML, with the same rendering pattern. This plugin allows for that.
 
 ```elixir
 defmodule MyAppWeb.HomeLive do
-  use MyAppWeb :live_view
+  use MyAppWeb, :live_view
   use MyAppNative, :live_view
-
 ```
 
-then just like all format LiveView Native rendering components you will create a new module namespaced under the calling module with the `module_suffix` appended:
+Then, just like all format LiveView Native rendering components, you will create a new module namespaced under the calling module with the `module_suffix` appended:
 
 ```elixir
 defmodule MyAppWeb.HomeLive.HTML do
   use MyAppNative, [:render_component, :html]
 ```
 
-Further details on additional options and an explanation of template rendering vs using `render/2` are in the LiveView Native docs.
+Further details on additional options and an explanation of template rendering vs. using `render/2` are in the LiveView Native docs.
 
-However, instead of `~LVN` you still use `~H` inside `render/2` functions. You also will use `.heex` as the template extensions instead of `.neex`.
+However, instead of `~LVN`, you still use `~H` inside `render/2` functions. You will also use `.heex` as the template extension instead of `.neex`.
 
-One advantage that using `live_view_native_html` and delegating to render components has over using LiveView's in-module HTML rendering is you get the `target` benefits from LiveView Native. Which means that you could opt to pass along a custom `interface` map with the `LiveSocket` connection in your `app.js`:
+One advantage of using `live_view_native_html` and delegating to render components over using LiveView's in-module HTML rendering is that you get the `target` benefits from LiveView Native. This means you could opt to pass along a custom `interface` map with the `LiveSocket` connection in your `app.js`:
 
 ```javascript
-let innteface = buildInterface(); // your own custom function to populate an interface object
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken, _interface: interface}});
+let customInterface = buildCustomInterface(); // your own custom function to populate an interface object
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken, _interface: customInterface}});
 ```
 
-now you can use `render/2` in the reder component and pattern match on custom targets or interface values. Perhaps you do some boot time device detection to determine the user is on mobile or not. From our prior example you could add the template `html/home_live+mobile.html.heex` or the function:
+Now you can use `render/2` in the render component and pattern match on custom targets or interface values. Perhaps you do some boot-time device detection to determine whether the user is on mobile or not. From our prior example, you could add the template `html/home_live+mobile.html.heex` or the function:
 
 ```elixir
 def render(assigns, %{"target" => "mobile"}) do
