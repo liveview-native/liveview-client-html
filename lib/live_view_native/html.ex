@@ -5,5 +5,6 @@ defmodule LiveViewNative.HTML do
     format: :html,
     component: LiveViewNative.HTML.Component,
     module_suffix: :HTML,
-    template_engine: Phoenix.LiveView.Engine
+    template_engine: Phoenix.LiveView.Engine,
+    client: LiveViewNative.HTML.Client
 end

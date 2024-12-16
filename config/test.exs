@@ -12,7 +12,7 @@ config :live_view_native, plugins: [
 #   heex: LiveViewNative.Engine
 # ]
 
-config :live_view_native_test,
+config :live_view_native_test_endpoint,
   formats: [:html],
   otp_app: :live_view_native_html,
   routes: [
