@@ -24,7 +24,8 @@ defmodule LiveViewNativeTest.HTML.InlineLive do
     formats: [:html],
     layouts: [
       html: {LiveViewNativeTest.HTML.Layouts, :override}
-    ]
+    ],
+    dispatch_to: &Module.concat/2
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket, :count, 100)}
