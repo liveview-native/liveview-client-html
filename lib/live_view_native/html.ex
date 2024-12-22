@@ -6,5 +6,5 @@ defmodule LiveViewNative.HTML do
     component: LiveViewNative.HTML.Component,
     module_suffix: :HTML,
     template_engine: Phoenix.LiveView.Engine,
-    client: LiveViewNative.HTML.Client
+    test_client: %LiveViewNativeTest.HTML.TestClient{}
 end
