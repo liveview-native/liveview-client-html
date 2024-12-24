@@ -26,7 +26,7 @@ by adding `live_view_native_html` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:live_view_native_html, "~> 0.3.0"}
+    {:live_view_native_html, "~> 0.4.0-rc.0"}
   ]
 end
 ```
