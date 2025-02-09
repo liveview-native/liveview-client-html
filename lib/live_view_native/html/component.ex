@@ -3,7 +3,15 @@ defmodule LiveViewNative.HTML.Component do
 
   defmacro __using__(_opts) do
     quote do
-      import Phoenix.Component, only: [sigil_H: 2]
+      @declarative Phoenix.Component.Declarative
+      import LiveViewNative.Component.Declarative, only: []
+      import LiveViewNative.Component, only: []
+      import Phoenix.Component.Declarative
+      import Phoenix.Component
+      import Phoenix.Component, except: [
+        embed_templates: 2
+      ]
+      import unquote(__MODULE__)
     end
   end
 

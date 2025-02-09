@@ -5,13 +5,21 @@ defmodule LiveViewNativeTest.HTML.InlineLive.HTML do
 
   def render(assigns, %{"target" => "mobile"}) do
     ~H"""
-    <div id="mobile-inline">Mobile Target Inline HTML Override Render <%= @count %></div>
+    <.target id="mobile-inline">Mobile Target Inline HTML Override Render {@count}</.target>
     """
   end
 
   def render(assigns, _interface) do
     ~H"""
-    <div id="inline">Inline HTML Override Render <%= @count %></div>
+    <.target id="inline">Inline HTML Override Render {@count} %></.target>
+    """
+  end
+
+  attr :rest, :global
+  slot :inner_block
+  def target(assigns) do
+    ~H"""
+    <div {@rest}>{render_slot(@inner_block)}</div>
     """
   end
 end
